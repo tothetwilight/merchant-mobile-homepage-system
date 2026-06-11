@@ -27,24 +27,33 @@ export function HomePage() {
 
   const pullDistance = Math.max(0, pull.pullDistance);
   const pullTransition = pull.status === 'pulling' || pull.status === 'ready' ? 'none' : 'all 220ms ease';
+  const headerHeight = 62;
+  const contentTopOffset = headerHeight;
+  const heroHeight = 126;
+  const heroGradient =
+    'linear-gradient(180deg,#e5392c 0%,#e5392c 54px,#e94734 92px,#f5f5f7 100%)';
 
   return (
     <PhoneShell>
       <div className="relative h-[100svh] overflow-hidden bg-[#f5f5f7] md:min-h-[844px] md:max-h-[932px] md:rounded-[34px]">
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-0"
+          className="pointer-events-none absolute inset-x-0 top-0 z-20 bg-[#e5392c]"
+          style={{ height: `calc(${headerHeight}px + env(safe-area-inset-top))` }}
+        />
+        <div className="absolute inset-x-0 top-0 z-30">
+          <HomeHeader store={config.store} />
+        </div>
+        <div
+          className="pointer-events-none absolute inset-x-0 z-0 bg-[#e5392c]"
           style={{
-            height: `calc(190px + env(safe-area-inset-top) + ${pullDistance}px)`,
-            background:
-              'linear-gradient(180deg,#e5392c 0%,#e5392c calc(100% - 88px),#eb5a45 calc(100% - 34px),rgba(245,245,247,0.08) 100%)',
-            transform: `translateY(${pullDistance * 0.12}px)`,
+            top: `${headerHeight - 4}px`,
+            height: pullDistance > 0 ? `${pullDistance + 28}px` : 0,
             transition: pullTransition
           }}
         />
-        <HomeHeader store={config.store} />
         <RefreshIndicator status={pull.status} pullDistance={pull.pullDistance} />
         <div
-          className="absolute inset-x-0 bottom-0 top-[66px] z-10 bg-transparent"
+          className="absolute inset-x-0 bottom-0 top-0 z-10 bg-transparent"
           style={{
             transform: `translateY(${pull.pullDistance}px)`,
             transition: pull.status === 'pulling' || pull.status === 'ready' ? 'none' : 'transform 220ms ease'
@@ -67,14 +76,24 @@ export function HomePage() {
             ) : (
               <>
                 <div
+                  className="pointer-events-none absolute inset-x-0 top-0 z-0"
                   style={{
-                    paddingTop: pull.status === 'refreshing' || pull.status === 'success' ? '0.9rem' : '0rem',
+                    height: `${heroHeight + pullDistance}px`,
+                    background: heroGradient,
+                    transition: pullTransition
+                  }}
+                />
+                <div
+                  className="relative z-10"
+                  style={{
+                    paddingTop:
+                      pull.status === 'refreshing' || pull.status === 'success' ? `calc(${contentTopOffset}px + 0.9rem)` : `${contentTopOffset}px`,
                     transition: 'padding-top 180ms ease'
                   }}
                 >
                   <StatsCard stats={config.stats} />
                 </div>
-                <div className="pb-32 pt-[6px]">
+                <div className="relative z-10 pb-32 pt-[6px]">
                   <MenuGrid menus={config.menus} />
                   <ChipGrid chips={config.chips} />
                   <WorkOrderCard config={config.workOrder} />

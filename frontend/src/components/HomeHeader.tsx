@@ -4,7 +4,7 @@ import { getPlaceholder } from '../lib/helpers';
 
 export function HomeHeader({ store }: { store: StoreConfig }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-0 overflow-hidden px-[14px] pb-[115px] text-white">
+    <header className="px-[14px] text-white">
       <div className="safe-top relative flex items-center justify-between pb-1 pt-1">
         <div className="flex items-center gap-2">
           <img
