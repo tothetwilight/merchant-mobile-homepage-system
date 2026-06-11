@@ -32,9 +32,11 @@ export function HomePage() {
     <PhoneShell>
       <div className="relative h-[100svh] overflow-hidden bg-[#f5f5f7] md:min-h-[844px] md:max-h-[932px] md:rounded-[34px]">
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 bg-[linear-gradient(180deg,#e5392c_0%,#e5392c_68%,#eb5a45_82%,rgba(245,245,247,0.08)_100%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-0"
           style={{
             height: `calc(190px + env(safe-area-inset-top) + ${pullDistance}px)`,
+            background:
+              'linear-gradient(180deg,#e5392c 0%,#e5392c calc(100% - 88px),#eb5a45 calc(100% - 34px),rgba(245,245,247,0.08) 100%)',
             transform: `translateY(${pullDistance * 0.12}px)`,
             transition: pullTransition
           }}
