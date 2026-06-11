@@ -4,8 +4,7 @@ import { getPlaceholder } from '../lib/helpers';
 
 export function HomeHeader({ store }: { store: StoreConfig }) {
   return (
-    <header className="absolute inset-x-0 top-0 z-0 overflow-hidden bg-[linear-gradient(180deg,#e5392c_0%,#e5392c_68%,#eb5a45_82%,rgba(245,245,247,0.08)_100%)] px-[14px] pb-[115px] text-white">
-      <div className="absolute inset-x-0 bottom-0 h-[126px] bg-[linear-gradient(180deg,rgba(229,57,44,0)_0%,rgba(233,71,52,0.36)_28%,rgba(238,112,90,0.22)_58%,rgba(245,245,247,0)_100%)]" />
+    <header className="absolute inset-x-0 top-0 z-0 overflow-hidden px-[14px] pb-[115px] text-white">
       <div className="safe-top relative flex items-center justify-between pb-1 pt-1">
         <div className="flex items-center gap-2">
           <img
