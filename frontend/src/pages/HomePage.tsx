@@ -24,17 +24,28 @@ export function HomePage() {
   const pull = usePullToRefresh(scrollRef, async () => {
     await fetchRemote('refresh');
   });
+
+  const pullDistance = Math.max(0, pull.pullDistance);
+  const pullTransition = pull.status === 'pulling' || pull.status === 'ready' ? 'none' : 'all 220ms ease';
+
   return (
     <PhoneShell>
       <div className="relative h-[100svh] overflow-hidden bg-[#f5f5f7] md:min-h-[844px] md:max-h-[932px] md:rounded-[34px]">
-        <div className="pointer-events-none fixed inset-x-0 top-0 h-[calc(126px+env(safe-area-inset-top))] bg-[linear-gradient(180deg,#e5392c_0%,#e5392c_68%,#eb5a45_82%,rgba(245,245,247,0.08)_100%)] md:hidden" />
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 bg-[linear-gradient(180deg,#e5392c_0%,#e5392c_68%,#eb5a45_82%,rgba(245,245,247,0.08)_100%)]"
+          style={{
+            height: `calc(190px + env(safe-area-inset-top) + ${pullDistance}px)`,
+            transform: `translateY(${pullDistance * 0.12}px)`,
+            transition: pullTransition
+          }}
+        />
         <HomeHeader store={config.store} />
         <RefreshIndicator status={pull.status} pullDistance={pull.pullDistance} />
         <div
           className="absolute inset-x-0 bottom-0 top-[66px] z-10 bg-transparent"
           style={{
             transform: `translateY(${pull.pullDistance}px)`,
-            transition: pull.status === 'refreshing' || pull.status === 'success' ? 'transform 220ms ease' : 'none'
+            transition: pull.status === 'pulling' || pull.status === 'ready' ? 'none' : 'transform 220ms ease'
           }}
         >
           <div
